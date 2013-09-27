@@ -3,7 +3,7 @@ author:
   email: 'victor@csie.org'
 name: 'zhutil'
 description: 'Chinese utils'
-version: '0.5.3'
+version: '0.5.4'
 repository:
   type: 'git'
   url: 'git://github.com/victorhsieh/npm-zhutil.git'
@@ -14,8 +14,8 @@ scripts:
   """
 main: 'lib/zhutil.js'
 engines:
-  node: '0.8.x'
-  npm: '1.1.x'
+  node: '0.10.x'
+  npm: '1.x'
 dependencies: {}
 devDependencies:
   LiveScript: \1.1.x
