@@ -28,4 +28,36 @@ parseZHNumber = (number) ->
       tmp = 0
   result + buffer + tmp
 
-module.exports = {parseZHNumber}
+annotate = (number) ->
+  str = ''
+  for word in commitword
+    str = number % 10000 + str
+    number = Math.floor number / 10000
+    if number > 0
+      str = word + str
+    else
+      break
+  return str
+
+approximate = (number, args) ->
+  base = args.base ? \萬
+  extra_decimal = args.extra_decimal ? 0
+  smart = args.smart ? true
+  if args.extra_decimal?
+    smart = false  # override
+
+  number = annotate number
+
+  index = number.indexOf base
+  if index < 0
+    return number
+
+  result = number.substr 0, index
+  if smart and result.length < 2 and extra_decimal == 0
+    extra_decimal = 1
+
+  if extra_decimal > 0
+    result += \. + number.substr index + 1, extra_decimal
+  return result + base
+
+module.exports = {parseZHNumber, annotate, approximate}

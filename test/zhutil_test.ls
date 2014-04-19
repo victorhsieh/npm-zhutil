@@ -1,13 +1,22 @@
 require! '../lib/zhutil'
 
-expectZH = (input, expected) ->
-  actual = zhutil.parseZHNumber(input)
+expect = (name, expected, f, ...args) ->
+  actual = f.apply [], args
+  input = name + \( + ([JSON.stringify x for x in args] * ',') + \)
   if actual != expected
-    console.log input + ': FAIL'
-    console.log "  EXPECTED: " + expected
-    console.log "  ACTUAL: " + actual
+    console.error "[FAIL] #input"
+    console.error "    EXPECTED: #expected"
+    console.error "    ACTUAL: #actual"
   else
-    console.log input + ': PASS'
+    console.log "[PASS] #input == #expected"
+
+
+#
+# zhutil.parseZHNumber
+#
+
+expectZH = (input, expected) ->
+  expect \parseZHNumber, expected, zhutil.parseZHNumber, input
 
 expectZH '零', 0
 expectZH '一', 1
@@ -36,3 +45,38 @@ expectZH '一兆一千萬零十一', 1000010000011
 
 # non-natural cases
 expectZH '一百十二', 112
+
+
+#
+# zhutil.annotate
+#
+
+expectAnnotation = (input, expected) ->
+  expect \annotate, expected, zhutil.annotate, input
+
+expectAnnotation 10987654321, \109億8765萬4321
+expectAnnotation 87654321, \8765萬4321
+expectAnnotation 4321, \4321
+expectAnnotation 1, \1
+
+
+#
+# zhutil.approximate
+#
+
+expectReadable = (number, options, expected) ->
+  expect \approximate, expected, zhutil.approximate, number, options
+
+# default scales to 萬
+expectReadable 10987654321, {}, \109億8765萬
+expectReadable 321, {}, \321
+expectReadable 10987654321, {base: \億}, \109億
+expectReadable 10987654321, {base: \億, extra_decimal: 1}, \109.8億
+expectReadable 10987654321, {base: \萬}, \109億8765萬
+
+# "smart" (defaults on) puts extra digit if the number is relatively small.
+expectReadable 54321, {}, \5.4萬
+expectReadable 654321, {}, \65萬
+expectReadable 54321, {extra_decimal: 2}, \5.43萬
+expectReadable 54321, {extra_decimal: 0}, \5萬
+expectReadable 54321, {smart: false}, \5萬
