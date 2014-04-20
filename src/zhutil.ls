@@ -29,6 +29,9 @@ parseZHNumber = (number) ->
   result + buffer + tmp
 
 annotate = (number) ->
+  if typeof number is \string'
+    number = parseInt number
+
   str = ''
   for word in commitword
     str = number % 10000 + str
@@ -40,9 +43,19 @@ annotate = (number) ->
   return str
 
 approximate = (number, args) ->
-  base = args.base ? \萬
-  extra_decimal = args.extra_decimal ? 0
+  if typeof number is \string'
+    number = parseInt number
+
+  if not args.base?
+    str = number.toString!
+    log1000 = Math.floor(str.length / 4)
+    if log1000 < 1
+      return str
+    base = commitword[log1000 - 1]
+  else
+    base = args.base
   smart = args.smart ? true
+  extra_decimal = args.extra_decimal ? 0
   if args.extra_decimal?
     smart = false  # override
 

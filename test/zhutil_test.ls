@@ -58,6 +58,7 @@ expectAnnotation 10987654321, \109億8765萬4321
 expectAnnotation 87654321, \8765萬4321
 expectAnnotation 4321, \4321
 expectAnnotation 1, \1
+expectAnnotation '10987654321', \109億8765萬4321
 
 
 #
@@ -67,12 +68,13 @@ expectAnnotation 1, \1
 expectReadable = (number, options, expected) ->
   expect \approximate, expected, zhutil.approximate, number, options
 
-# default scales to 萬
-expectReadable 10987654321, {}, \109億8765萬
+expectReadable 10987654321, {}, \109億
+expectReadable 987654321, {}, \9.8億
 expectReadable 321, {}, \321
 expectReadable 10987654321, {base: \億}, \109億
 expectReadable 10987654321, {base: \億, extra_decimal: 1}, \109.8億
 expectReadable 10987654321, {base: \萬}, \109億8765萬
+expectReadable '987654321', {}, \9.8億
 
 # "smart" (defaults on) puts extra digit if the number is relatively small.
 expectReadable 54321, {}, \5.4萬
