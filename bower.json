@@ -1,0 +1,13 @@
+{
+  "name": "npm-zhutil",
+  "homepage": "https://github.com/victorhsieh/npm-zhutil",
+  "authors": [ "Victor Hsieh <victor@csie.org>" ],
+  "description": "Chinese language utils",
+  "main": "build/zhutil.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ]
+}
