@@ -13,6 +13,7 @@ scripts:
     ./node_modules/.bin/lsc -cbo lib src
   """
   test: './node_modules/.bin/lsc test/zhutil_test.ls'
+  build: 'gulp --require LiveScript build'
 main: 'lib/zhutil.js'
 engines:
   node: '0.10.x'
@@ -20,4 +21,10 @@ engines:
 dependencies: {}
 devDependencies:
   LiveScript: \1.1.x
+  gulp: '~3.6.1'
+  'gulp-livescript': '~0.2.1'
+  'gulp-wrap-exports': '~0.2.0'
+  'gulp-uglify': '~0.2.1'
+  'gulp-rename': '~1.2.0'
+  'gulp-clean': '~0.2.4'
 optionalDependencies: {}
