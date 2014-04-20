@@ -29,8 +29,10 @@ parseZHNumber = (number) ->
   result + buffer + tmp
 
 annotate = (number) ->
-  if typeof number is \string'
-    number = parseInt number
+  if typeof number is \string
+    tmp = parseInt number
+    return number if isNaN tmp
+    number = tmp
 
   str = ''
   for word in commitword
@@ -43,8 +45,10 @@ annotate = (number) ->
   return str
 
 approximate = (number, args) ->
-  if typeof number is \string'
-    number = parseInt number
+  if typeof number is \string
+    tmp = parseInt number
+    return number if isNaN tmp
+    number = tmp
 
   if not args.base?
     str = number.toString!

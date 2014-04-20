@@ -59,26 +59,28 @@ expectAnnotation 87654321, \8765萬4321
 expectAnnotation 4321, \4321
 expectAnnotation 1, \1
 expectAnnotation '10987654321', \109億8765萬4321
+expectAnnotation 'not number', 'not number'
 
 
 #
 # zhutil.approximate
 #
 
-expectReadable = (number, options, expected) ->
+expectApproximate = (number, options, expected) ->
   expect \approximate, expected, zhutil.approximate, number, options
 
-expectReadable 10987654321, {}, \109億
-expectReadable 987654321, {}, \9.8億
-expectReadable 321, {}, \321
-expectReadable 10987654321, {base: \億}, \109億
-expectReadable 10987654321, {base: \億, extra_decimal: 1}, \109.8億
-expectReadable 10987654321, {base: \萬}, \109億8765萬
-expectReadable '987654321', {}, \9.8億
+expectApproximate 10987654321, {}, \109億
+expectApproximate 987654321, {}, \9.8億
+expectApproximate 321, {}, \321
+expectApproximate 10987654321, {base: \億}, \109億
+expectApproximate 10987654321, {base: \億, extra_decimal: 1}, \109.8億
+expectApproximate 10987654321, {base: \萬}, \109億8765萬
+expectApproximate '987654321', {}, \9.8億
+expectApproximate 'not number', {}, 'not number'
 
 # "smart" (defaults on) puts extra digit if the number is relatively small.
-expectReadable 54321, {}, \5.4萬
-expectReadable 654321, {}, \65萬
-expectReadable 54321, {extra_decimal: 2}, \5.43萬
-expectReadable 54321, {extra_decimal: 0}, \5萬
-expectReadable 54321, {smart: false}, \5萬
+expectApproximate 54321, {}, \5.4萬
+expectApproximate 654321, {}, \65萬
+expectApproximate 54321, {extra_decimal: 2}, \5.43萬
+expectApproximate 54321, {extra_decimal: 0}, \5萬
+expectApproximate 54321, {smart: false}, \5萬
