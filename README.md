@@ -20,6 +20,8 @@ Example
 
 See test/zhutil_test.ls for more example.
 
-Build js and min.js
-=======
-gulp --require LiveScript
+Build
+=====
+  ```
+  $ npm run build
+  ```
