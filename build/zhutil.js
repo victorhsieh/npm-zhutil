@@ -56,9 +56,13 @@ var exports = module.exports;
     return result + buffer + tmp;
   };
   annotate = function(number){
-    var str, i$, ref$, len$, word;
-    if (typeof number === 'string\'') {
-      number = parseInt(number);
+    var tmp, str, i$, ref$, len$, word;
+    if (typeof number === 'string') {
+      tmp = parseInt(number);
+      if (isNaN(tmp)) {
+        return number;
+      }
+      number = tmp;
     }
     str = '';
     for (i$ = 0, len$ = (ref$ = commitword).length; i$ < len$; ++i$) {
@@ -74,9 +78,13 @@ var exports = module.exports;
     return str;
   };
   approximate = function(number, args){
-    var str, log1000, base, smart, ref$, extra_decimal, index, result;
-    if (typeof number === 'string\'') {
-      number = parseInt(number);
+    var tmp, str, log1000, base, smart, ref$, extra_decimal, index, result;
+    if (typeof number === 'string') {
+      tmp = parseInt(number);
+      if (isNaN(tmp)) {
+        return number;
+      }
+      number = tmp;
     }
     if (args.base == null) {
       str = number.toString();
