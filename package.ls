@@ -13,7 +13,7 @@ scripts:
     ./node_modules/.bin/lsc -cbo lib src
   """
   test: './node_modules/.bin/lsc test/zhutil_test.ls'
-  build: 'gulp --require LiveScript build'
+  build: 'node_modules/.bin/gulp --require LiveScript build'
 main: 'lib/zhutil.js'
 engines:
   node: '0.10.x'
