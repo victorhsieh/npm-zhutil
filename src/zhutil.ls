@@ -9,6 +9,10 @@ zhmap10 = {
   '億': Math.pow(10, 8), '兆': Math.pow(10, 12) }
 commitword = <[ 萬 億 兆 ]>
 
+string2number = (str) ->
+  num = parseInt(str - ',')
+  return if isNaN(num) then void else num
+
 parseZHNumber = (number) ->
   result = 0
   buffer = 0
@@ -30,8 +34,8 @@ parseZHNumber = (number) ->
 
 annotate = (number) ->
   if typeof number is \string
-    tmp = parseInt number
-    return number if isNaN tmp
+    tmp = string2number number
+    return number if tmp is void
     number = tmp
 
   str = ''
@@ -46,8 +50,8 @@ annotate = (number) ->
 
 approximate = (number, args) ->
   if typeof number is \string
-    tmp = parseInt number
-    return number if isNaN tmp
+    tmp = string2number number
+    return number if tmp is void
     number = tmp
 
   if not args.base?

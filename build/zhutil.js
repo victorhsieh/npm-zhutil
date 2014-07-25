@@ -1,7 +1,7 @@
 !function(module, global){
 var exports = module.exports;
 (function(){
-  var zhnumber, zhnumberformal, zhmap, res$, i$, len$, i, c, zhwordmap, ref$, zhmap10, commitword, parseZHNumber, annotate, approximate;
+  var zhnumber, zhnumberformal, zhmap, res$, i$, len$, i, c, zhwordmap, ref$, zhmap10, commitword, string2number, parseZHNumber, annotate, approximate, replace$ = ''.replace;
   zhnumber = ['○', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
   zhnumberformal = ['零', '壹', '貳', '參', '肆', '伍', '陸', '柒', '捌', '玖'];
   res$ = {};
@@ -29,6 +29,11 @@ var exports = module.exports;
     '兆': Math.pow(10, 12)
   };
   commitword = ['萬', '億', '兆'];
+  string2number = function(str){
+    var num;
+    num = parseInt(replace$.call(str, ',', ''));
+    return isNaN(num) ? void 8 : num;
+  };
   parseZHNumber = function(number){
     var result, buffer, tmp, i$, ref$, len$, digit;
     result = 0;
@@ -58,8 +63,8 @@ var exports = module.exports;
   annotate = function(number){
     var tmp, str, i$, ref$, len$, word;
     if (typeof number === 'string') {
-      tmp = parseInt(number);
-      if (isNaN(tmp)) {
+      tmp = string2number(number);
+      if (tmp === void 8) {
         return number;
       }
       number = tmp;
@@ -80,8 +85,8 @@ var exports = module.exports;
   approximate = function(number, args){
     var tmp, str, log1000, base, smart, ref$, extra_decimal, index, result;
     if (typeof number === 'string') {
-      tmp = parseInt(number);
-      if (isNaN(tmp)) {
+      tmp = string2number(number);
+      if (tmp === void 8) {
         return number;
       }
       number = tmp;
