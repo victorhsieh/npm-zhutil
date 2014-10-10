@@ -33,5 +33,5 @@ Release
   $ npm version X.Y.Z
   $ (update package.ls ...)
   $ npm publish
-  $ git commit; git push --tags
+  $ git commit; git push; git push --tags
   ```
