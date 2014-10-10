@@ -25,3 +25,13 @@ Build
   ```
   $ npm run build
   ```
+
+Release
+=======
+  ```
+  $ node_modules/.bin/gulp --require LiveScript build && git add -u build/ && ...
+  $ npm version X.Y.Z
+  $ (update package.ls ...)
+  $ npm publish
+  $ git commit; git push --tags
+  ```
