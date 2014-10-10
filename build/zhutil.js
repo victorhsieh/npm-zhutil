@@ -83,7 +83,7 @@ var exports = module.exports;
     return str;
   };
   approximate = function(number, args){
-    var tmp, str, log1000, base, smart, ref$, extra_decimal, index, result;
+    var tmp, str, log1000, base, smart, ref$, extra_decimal, index, result, _, digits;
     if (typeof number === 'string') {
       tmp = string2number(number);
       if (tmp === void 8) {
@@ -116,7 +116,9 @@ var exports = module.exports;
       extra_decimal = 1;
     }
     if (extra_decimal > 0) {
-      result += '.' + number.substr(index + 1, extra_decimal);
+      ref$ = number.substr(index + 1).match(/^(\d+)/), _ = ref$[0], digits = ref$[1];
+      digits = repeatString$('0', 4 - digits.length) + digits;
+      result += '.' + digits.substr(0, extra_decimal);
     }
     return result + base;
   };
@@ -129,6 +131,10 @@ var exports = module.exports;
     var i = -1, l = xs.length >>> 0;
     while (++i < l) if (x === xs[i]) return true;
     return false;
+  }
+  function repeatString$(str, n){
+    for (var r = ''; n > 0; (n >>= 1) && (str += str)) if (n & 1) r += str;
+    return r;
   }
 }).call(this);
 

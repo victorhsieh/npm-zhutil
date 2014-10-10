@@ -75,6 +75,7 @@ expectApproximate 987654321, {}, \9.8億
 expectApproximate 321, {}, \321
 expectApproximate 10987654321, {base: \億}, \109億
 expectApproximate 10987654321, {base: \億, extra_decimal: 1}, \109.8億
+expectApproximate 102412200, {base: \億, extra_decimal: 2}, \1.02億
 expectApproximate 10987654321, {base: \萬}, \109億8765萬
 expectApproximate '987654321', {}, \9.8億
 expectApproximate 'not number', {}, 'not number'

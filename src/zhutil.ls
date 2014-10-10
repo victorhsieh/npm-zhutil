@@ -78,7 +78,9 @@ approximate = (number, args) ->
     extra_decimal = 1
 
   if extra_decimal > 0
-    result += \. + number.substr index + 1, extra_decimal
+    [_, digits] = number.substr(index + 1).match /^(\d+)/
+    digits = '0' * (4 - digits.length) + digits
+    result += \. + digits.substr 0, extra_decimal
   return result + base
 
 module.exports = {parseZHNumber, annotate, approximate}
