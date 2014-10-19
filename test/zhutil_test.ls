@@ -63,7 +63,7 @@ expectAnnotation '10987654321', \109億8765萬4321
 expectAnnotation 'not number', 'not number'
 expectAnnotation '54,321', \5萬4321
 expectAnnotation -4321, '-4321'
-# TODO: expectAnnotation '-54,321', \-5萬4321
+expectAnnotation '-54,321', \-5萬4321
 
 
 #
@@ -92,4 +92,5 @@ expectApproximate 54321, {extra_decimal: 2}, \5.43萬
 expectApproximate 54321, {extra_decimal: 0}, \5萬
 expectApproximate 54321, {smart: false}, \5萬
 expectApproximate '54,321', {}, \5.4萬
+expectApproximate '-54,321', {}, \-5.4萬
 expectApproximate -654321, {}, \-65萬

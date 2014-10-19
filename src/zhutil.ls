@@ -35,11 +35,6 @@ parseZHNumber = (number) ->
   result + buffer + tmp
 
 annotate_positive = (number) ->
-  if typeof number is \string
-    tmp = string2number number
-    return number if tmp is void
-    number = tmp
-
   str = ''
   for word in commitword
     str = number % 10000 + str
@@ -51,11 +46,6 @@ annotate_positive = (number) ->
   return str
 
 approximate_positive = (number, args) ->
-  if typeof number is \string
-    tmp = string2number number
-    return number if tmp is void
-    number = tmp
-
   if not args.base?
     str = number.toString!
     log1000 = Math.floor(str.length / 4)
@@ -85,16 +75,20 @@ approximate_positive = (number, args) ->
     result += \. + digits.substr 0, extra_decimal
   return result + base
 
-annotate = (number, args) ->
-  if number < 0
-    (args?negative_prefix ? \-) + annotate_positive -number
-  else
-    annotate_positive number
+input_filter = (func_expects_positive) ->
+  return ->
+    [number, args] = Array.prototype.slice.call arguments
+    if typeof number is \string
+      tmp = string2number number
+      return number if tmp is void
+      number = tmp
 
-approximate = (number, args) ->
-  if number < 0
-    (args.negative_prefix ? \-) + approximate_positive -number, args
-  else
-    approximate_positive number, args
+    if number < 0
+      (args?negative_prefix ? \-) + func_expects_positive.call @, -number, args
+    else
+      func_expects_positive.call @, number, args
+
+annotate = input_filter annotate_positive
+approximate = input_filter approximate_positive
 
 module.exports = {parseZHNumber, annotate, approximate}
