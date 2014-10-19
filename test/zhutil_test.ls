@@ -42,6 +42,7 @@ expectZH '玖億捌仟柒佰陸拾伍萬', 987650000
 expectZH '玖億捌仟柒佰陸拾伍萬肆仟參佰貳拾壹', 987654321
 expectZH '一兆五千零三十', 1000000005030
 expectZH '一兆一千萬零十一', 1000010000011
+expectZH '負五百', -500
 
 # non-natural cases
 expectZH '一百十二', 112
@@ -61,6 +62,8 @@ expectAnnotation 1, \1
 expectAnnotation '10987654321', \109億8765萬4321
 expectAnnotation 'not number', 'not number'
 expectAnnotation '54,321', \5萬4321
+expectAnnotation -4321, '-4321'
+# TODO: expectAnnotation '-54,321', \-5萬4321
 
 
 #
@@ -79,6 +82,8 @@ expectApproximate 102412200, {base: \億, extra_decimal: 2}, \1.02億
 expectApproximate 10987654321, {base: \萬}, \109億8765萬
 expectApproximate '987654321', {}, \9.8億
 expectApproximate 'not number', {}, 'not number'
+expectApproximate -987654321, {}, \-9.8億
+expectApproximate -987654321, {negative_prefix: '(虧損)'}, '(虧損)9.8億'
 
 # "smart" (defaults on) puts extra digit if the number is relatively small.
 expectApproximate 54321, {}, \5.4萬
@@ -87,3 +92,4 @@ expectApproximate 54321, {extra_decimal: 2}, \5.43萬
 expectApproximate 54321, {extra_decimal: 0}, \5萬
 expectApproximate 54321, {smart: false}, \5萬
 expectApproximate '54,321', {}, \5.4萬
+expectApproximate -654321, {}, \-65萬

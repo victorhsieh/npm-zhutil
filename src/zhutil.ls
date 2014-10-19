@@ -14,6 +14,8 @@ string2number = (str) ->
   return if isNaN(num) then void else num
 
 parseZHNumber = (number) ->
+  if number[0] == \負
+    return -parseZHNumber number.slice(1)
   result = 0
   buffer = 0
   tmp = 0
@@ -32,7 +34,7 @@ parseZHNumber = (number) ->
       tmp = 0
   result + buffer + tmp
 
-annotate = (number) ->
+annotate_positive = (number) ->
   if typeof number is \string
     tmp = string2number number
     return number if tmp is void
@@ -48,7 +50,7 @@ annotate = (number) ->
       break
   return str
 
-approximate = (number, args) ->
+approximate_positive = (number, args) ->
   if typeof number is \string
     tmp = string2number number
     return number if tmp is void
@@ -67,7 +69,7 @@ approximate = (number, args) ->
   if args.extra_decimal?
     smart = false  # override
 
-  number = annotate number
+  number = annotate_positive number
 
   index = number.indexOf base
   if index < 0
@@ -82,5 +84,17 @@ approximate = (number, args) ->
     digits = '0' * (4 - digits.length) + digits
     result += \. + digits.substr 0, extra_decimal
   return result + base
+
+annotate = (number, args) ->
+  if number < 0
+    (args?negative_prefix ? \-) + annotate_positive -number
+  else
+    annotate_positive number
+
+approximate = (number, args) ->
+  if number < 0
+    (args.negative_prefix ? \-) + approximate_positive -number, args
+  else
+    approximate_positive number, args
 
 module.exports = {parseZHNumber, annotate, approximate}

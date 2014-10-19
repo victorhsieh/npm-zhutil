@@ -1,7 +1,7 @@
 !function(module, global){
 var exports = module.exports;
 (function(){
-  var zhnumber, zhnumberformal, zhmap, res$, i$, len$, i, c, zhwordmap, ref$, zhmap10, commitword, string2number, parseZHNumber, annotate, approximate, replace$ = ''.replace;
+  var zhnumber, zhnumberformal, zhmap, res$, i$, len$, i, c, zhwordmap, ref$, zhmap10, commitword, string2number, parseZHNumber, annotate_positive, approximate_positive, annotate, approximate, replace$ = ''.replace;
   zhnumber = ['○', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
   zhnumberformal = ['零', '壹', '貳', '參', '肆', '伍', '陸', '柒', '捌', '玖'];
   res$ = {};
@@ -36,6 +36,9 @@ var exports = module.exports;
   };
   parseZHNumber = function(number){
     var result, buffer, tmp, i$, ref$, len$, digit;
+    if (number[0] === '負') {
+      return -parseZHNumber(number.slice(1));
+    }
     result = 0;
     buffer = 0;
     tmp = 0;
@@ -60,7 +63,7 @@ var exports = module.exports;
     }
     return result + buffer + tmp;
   };
-  annotate = function(number){
+  annotate_positive = function(number){
     var tmp, str, i$, ref$, len$, word;
     if (typeof number === 'string') {
       tmp = string2number(number);
@@ -82,7 +85,7 @@ var exports = module.exports;
     }
     return str;
   };
-  approximate = function(number, args){
+  approximate_positive = function(number, args){
     var tmp, str, log1000, base, smart, ref$, extra_decimal, index, result, _, digits;
     if (typeof number === 'string') {
       tmp = string2number(number);
@@ -106,7 +109,7 @@ var exports = module.exports;
     if (args.extra_decimal != null) {
       smart = false;
     }
-    number = annotate(number);
+    number = annotate_positive(number);
     index = number.indexOf(base);
     if (index < 0) {
       return number;
@@ -121,6 +124,22 @@ var exports = module.exports;
       result += '.' + digits.substr(0, extra_decimal);
     }
     return result + base;
+  };
+  annotate = function(number, args){
+    var ref$;
+    if (number < 0) {
+      return ((ref$ = args != null ? args.negative_prefix : void 8) != null ? ref$ : '-') + annotate_positive(-number);
+    } else {
+      return annotate_positive(number);
+    }
+  };
+  approximate = function(number, args){
+    var ref$;
+    if (number < 0) {
+      return ((ref$ = args.negative_prefix) != null ? ref$ : '-') + approximate_positive(-number, args);
+    } else {
+      return approximate_positive(number, args);
+    }
   };
   module.exports = {
     parseZHNumber: parseZHNumber,
