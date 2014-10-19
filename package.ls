@@ -3,7 +3,7 @@ author:
   email: 'victor@csie.org'
 name: 'zhutil'
 description: 'Chinese utils'
-version: '0.6.6'
+version: '0.6.7'
 repository:
   type: 'git'
   url: 'git://github.com/victorhsieh/npm-zhutil.git'
