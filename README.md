@@ -29,7 +29,8 @@ Build
 Release
 =======
   ```
-  $ node_modules/.bin/gulp --require LiveScript build && git add -u build/ && ...
+  $ node_modules/.bin/gulp --require LiveScript build && git add -u build/
+  $ git commit
   $ npm version X.Y.Z
   $ (update package.ls ...)
   $ npm publish
