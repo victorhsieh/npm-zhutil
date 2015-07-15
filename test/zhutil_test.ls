@@ -22,6 +22,7 @@ expectZH '零', 0
 expectZH '一', 1
 expectZH '叁', 3
 expectZH '十', 10
+expectZH '十ㄧ', 11 # 'ㄧ' is zhu-yin
 expectZH '十二', 12
 expectZH '二十', 20
 expectZH '三十四', 34
