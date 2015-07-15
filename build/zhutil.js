@@ -19,7 +19,7 @@ var exports = module.exports;
       results$[zhnumberformal[i]] = c;
     }
     return results$;
-  }()), ref$['０'] = '○', ref$['兩'] = '二', ref$['拾'] = '十', ref$['佰'] = '百', ref$['仟'] = '千', ref$);
+  }()), ref$['０'] = '○', ref$['兩'] = '二', ref$['叁'] = '三', ref$['拾'] = '十', ref$['佰'] = '百', ref$['仟'] = '千', ref$);
   zhmap10 = {
     '十': 10,
     '百': 100,
